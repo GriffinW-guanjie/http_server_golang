@@ -31,7 +31,7 @@ type Post struct {
 	Text      string    `json:"text"`
 }
 
-func newClient(path string) Client {
+func NewClient(path string) Client {
 	return Client{location: path}
 }
 
@@ -48,7 +48,8 @@ func (c Client) createDB() error {
 func (c Client) EnsureDB() error {
 	_,err := os.ReadFile(c.location)
 	if err != nil {
-		return err
+		c.createDB()
+		return nil
 	} else {
 		return nil
 	}
